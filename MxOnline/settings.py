@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'operation',
     'xadmin',
     'crispy_forms',
-    'reversion'
+    'reversion',
+    'captcha',
 ]
 
 AUTH_USER_MODEL = "users.UserProfile"
