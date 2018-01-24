@@ -143,3 +143,10 @@ STATICFILES_DIRS = [
 AUTHENTICATION_BACKENDS = (
     'users.views.CustomBackend',
 )
+
+EMAIL_HOST = "mx.the9.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = "wuying@9c.com"
+EMAIL_HOST_PASSWORD = "asdf:LKJ12"
+EMAIL_FROM = "wuying@9c.com"
