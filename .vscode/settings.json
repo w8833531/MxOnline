@@ -2,17 +2,6 @@
     // vscode setting for django http://ruddra.com/2017/08/19/vs-code-for-python-development/index.html
     "python.pythonPath": "C:/Users/Admin/mydjango/Scripts/python",
     "python.linting.pylintPath": "C:/Users/Admin/mydjango/Scripts/pylint",
-    "python.linting.pylintEnabled": true,
-    "python.linting.pep8Enabled": true,
-    "python.linting.pylintArgs": [
-        "--ignore-missing-imports",
-        "--follow-imports=silent",
-        "--load-plugins",
-        "pylint_django"
-    ],
-    "python.linting.pep8Args": [
-        "--ignore=E501"
-    ],
     "editor.formatOnSave": true,
     "editor.rulers": [
         80,
