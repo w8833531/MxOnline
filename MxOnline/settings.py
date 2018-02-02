@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 import os
 import sys
 
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
@@ -48,6 +49,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'reversion',
     'captcha',
+    'pure_pagination',
 ]
 
 AUTH_USER_MODEL = "users.UserProfile"
@@ -75,6 +77,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
             ],
         },
     },
@@ -144,9 +147,14 @@ AUTHENTICATION_BACKENDS = (
     'users.views.CustomBackend',
 )
 
+# Email 设置
 EMAIL_HOST = "mx.the9.com"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = "wuying@9c.com"
 EMAIL_HOST_PASSWORD = "asdf:LKJ12"
 EMAIL_FROM = "wuying@9c.com"
+
+# Media url 设置
+MEDIA_URL = "/static/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/media')

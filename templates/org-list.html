@@ -1,4 +1,11 @@
-{% extends 'base.html' %} {% block title %}课程机构列表 - 慕学在线网{% endblock %} {% load staticfiles %} {% block custom_bread %}
+<!DOCTYPE html>
+<!--
+@File   : org-list.html
+@Author : 吴鹰 ({__email})
+@Link   : 
+@Date   : 1/30/2018, 2:23:18 PM
+-->
+{% extends "base.html" %} {% load staticfiles %} {% block title %} 课程机构列表 - 慕学在线网 {% endblock %} {% block custom_bread %}
 <section>
     <div class="wp">
         <ul class="crumbs">
@@ -8,7 +15,7 @@
         </ul>
     </div>
 </section>
-{% endblock %} {% block content %}
+{% endblock custom_bread %} {% block content %}
 <section>
     <div class="wp butler_list_box list">
         <div class='left'>
@@ -42,9 +49,9 @@
                             <a href="?ct={{ category }}">
                                 <span class="{% ifequal city_id '' %}active2{% endifequal %}">全部</span>
                             </a>
-                            {% for city in all_citys %}
+                            {% for city in all_cities %}
                             <a href="?city={{ city.id }}&ct={{ category }}">
-                                <span class="{% ifequal city_id city.id|stringformat:" i " %}active2{% endifequal %}">{{ city.name }}</span>
+                                <span class="{% ifequal city_id city.id|stringformat:'i' %}active2{% endifequal %}">{{ city.name }}</span>
                             </a>
                             {% endfor %}
                         </div>
@@ -68,11 +75,11 @@
                             </li>
                         </ul>
                     </div>
-                    {% for course_org in all_orgs %}
+                    {% for course_org in all_orgs.object_list %}
                     <dl class="des difdes">
                         <dt>
-                            <a href="{% url 'org:org_home' course_org.id %}">
-                                <img width="200" height="120" class="scrollLoading" data-url="{{ MEDIA_URL }}{{ course_org.image }}" />
+                            <a href="">
+                                <img width="200" height="120" class="scrollLoading" data-url="{{ MEDIA_URL }}{{ course_org.images }}" />
                             </a>
                         </dt>
                         <dd>
@@ -91,13 +98,13 @@
                             <ul class="cont">
                                 <li class="first">
                                     <p class="pic9">课程数：
-                                        <span>1</span>
+                                        <span> {{ course_org.course_nums }}</span>
                                     </p>
                                     <p class="c7">学习人数：
-                                        <span>1000</span>
+                                        <span>{{ course_org.students }}</span>
                                     </p>
                                 </li>
-                                <li class="c8" style="padding-left:18px;">北京市海淀区中关村北大街</li>
+                                <li class="c8" style="padding-left:18px;">{{ course_org.address }}</li>
                                 <li class="pic10" style="padding-left:18px;">经典课程：
 
                                     <a href="/diary/19/">c语言基础入门</a>
@@ -150,7 +157,7 @@
                 </div>
                 <div>
                     <img src="{% static 'images/rightform2.png' %}" />
-                    <input type="text" name="mobile" id="companyMobile" placeholder="手机号" />
+                    <input type="text" name="mobile" id="companyMobile" placeholder="联系电话" />
                 </div>
                 <div>
                     <img src="{% static 'images/rightform3.png' %}" />
@@ -181,7 +188,6 @@
         </div>
     </div>
 </section>
-{% endblock %} {% block custom_js %}
 <script>
     $(function () {
         $('#jsStayBtn').on('click', function () {

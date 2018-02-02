@@ -23,6 +23,7 @@ import xadmin
 
 
 from users.views import *
+from organization.views import *
 
 
 # from xadmin.plugins import xversion
@@ -33,15 +34,26 @@ from users.views import *
 # xversion.register_models()
 
 urlpatterns = [
+    # 管理站点xadmin url
     url(r'^xadmin/', xadmin.site.urls),
+    # 首页 url
     url('^$', TemplateView.as_view(template_name="index.html"), name="index"),
+    # 登录 url
     url('^login/$', LoginView.as_view(), name="login"),
+    # 注册 url
     url('^register/$', RegisterView.as_view(), name="register"),
+    # 忘记密码 url
     url(r'^forget/$', ForgetPwdView.as_view(), name="forget_pwd"),
+    # 注册码 url
     url(r'^captcha/', include('captcha.urls')),
+    # 激活 url
     url(r'^active/(?P<active_code>.*)/$',
         ActiveUserView.as_view(), name="user_active"),
+    # 重置密码 url
     url(r'^reset/(?P<reset_code>.*)/$',
         ResetView.as_view(), name="reset_pwd"),
+    # 更改密码
     url(r'^modify_pwd/$', ModifyPwdView.as_view(), name="modify_pwd"),
+    # 课程机构URL
+    url(r'^org/', include('organization.urls', namespace="org")),
 ]

@@ -40,6 +40,20 @@ class CourseOrg(models.Model):
         default='',
         verbose_name="机构描述",
     )
+    category = models.CharField(
+        max_length=20,
+        choices=(("pxjg", "培训机构"), ("gx", "高校"), ("gr", "个人")),
+        verbose_name="机构类别",
+        default="pxjg",
+    )
+    students = models.IntegerField(
+        default=0,
+        verbose_name="学习人数"
+    )
+    course_nums = models.IntegerField(
+        default=0,
+        verbose_name="课程数"
+    )
     click_nums = models.IntegerField(
         default=0,
         verbose_name="点击数"
@@ -49,8 +63,8 @@ class CourseOrg(models.Model):
         verbose_name="收藏数"
     )
     images = models.ImageField(
-        upload_to="image/org/%Y/%m",
-        verbose_name="封面图",
+        upload_to="org/%Y/%m",
+        verbose_name="logo",
         max_length=100)
     address = models.CharField(
         max_length=150,

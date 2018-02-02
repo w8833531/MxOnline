@@ -16,7 +16,7 @@ class UserConsult(models.Model):
         verbose_name="姓名",
     )
     mobile = models.CharField(
-        max_length=11,
+        max_length=15,
         verbose_name="手机",
     )
     course_name = models.CharField(
