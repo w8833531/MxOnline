@@ -13,9 +13,11 @@ class UserProfile(AbstractUser):
     address = models.CharField(max_length=100, default="")
     mobile = models.CharField(max_length=11, null=True, blank=True)
     images = models.ImageField(
-        upload_to="image/users/%Y/%m",
+        upload_to="users/%Y/%m",
         default="image/default.png",
-        max_length=100
+        max_length=100,
+        null=True,
+        blank=True,
     )
 
     class Meta:

@@ -115,6 +115,12 @@ class Teacher(models.Model):
         max_length=50,
         verbose_name="教学风格",
     )
+    image = models.ImageField(
+        upload_to="teacher/%Y/%m",
+        verbose_name="头像",
+        max_length=100,
+        default='',
+    )
     click_nums = models.IntegerField(
         default=0,
         verbose_name="点击数"
@@ -131,3 +137,6 @@ class Teacher(models.Model):
     class Meta:
         verbose_name = "教师"
         verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.name

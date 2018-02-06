@@ -7,6 +7,7 @@ from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse
 from .models import CourseOrg, CityDict
 from operation.forms import *
+from courses.models import Course
 
 
 class OrgView(View):
@@ -68,4 +69,99 @@ class AddUserConsultView(View):
                 content_type='application/json'
             )
         else:
-            return HttpResponse('{"status":"fail", "msg":"添加出错"}', content_type='application/json')
+            return HttpResponse(
+                '{"status":"fail", "msg":"添加出错"}',
+                content_type='application/json'
+            )
+
+
+class OrgHomeView(View):
+    """
+    机构详情首页
+    """
+
+    def get(self, request, org_id):
+        current_page = "home"
+        # 通过request的org_id,获取机构对象
+        course_org = CourseOrg.objects.get(id=int(org_id))
+        # 通过机构对象，获取机构关联课程（course_set.all)
+        all_courses = course_org.course_set.all()[:3]
+        # 通过机构对象，获取机构关联教师（techer_set.all)
+        all_teachers = course_org.teacher_set.all()[:2]
+        # 返回机构详情页
+        return render(
+            request,
+            'org-detail-homepage.html',
+            {
+                'all_courses': all_courses,
+                'all_teachers': all_teachers,
+                'course_org': course_org,
+                'current_page': current_page,
+            },
+        )
+
+
+class OrgCourseView(View):
+    """
+    机构课程列表页
+    """
+
+    def get(self, request, org_id):
+        current_page = "course"
+        # 通过request的org_id,获取机构对象
+        course_org = CourseOrg.objects.get(id=int(org_id))
+        # 通过机构对象，获取机构关联课程（course_set.all)
+        all_courses = course_org.course_set.all()
+        # 返回机构课程详情页
+        return render(
+            request,
+            'org-detail-course.html',
+            {
+                'all_courses': all_courses,
+                'course_org': course_org,
+                'current_page': current_page,
+            },
+        )
+
+
+class OrgDescView(View):
+    """
+    机构介绍页
+    """
+
+    def get(self, request, org_id):
+        current_page = "desc"
+        # 通过request的org_id,获取机构对象
+        course_org = CourseOrg.objects.get(id=int(org_id))
+        # 返回机构课程详情页
+        return render(
+            request,
+            'org-detail-desc.html',
+            {
+                'course_org': course_org,
+                'current_page': current_page,
+            },
+        )
+
+
+class OrgTeacherView(View):
+    """
+    机构教师列表页
+    """
+
+    def get(self, request, org_id):
+        current_page = "teacher"
+        # 通过request的org_id,获取机构对象
+        course_org = CourseOrg.objects.get(id=int(org_id))
+        # 通过机构对象，获取机构关联教师（course_set.all)
+        all_teachers = course_org.teacher_set.all()
+        # 返回机构课程详情页
+        return render(
+            request,
+            'org-detail-teachers.html',
+            {
+                'all_teachers': all_teachers,
+                'course_org': course_org,
+                'current_page': current_page,
+            },
+        )

@@ -1,11 +1,14 @@
 from django.db import models
 from datetime import datetime
+from organization.models import CourseOrg
 
 
 # Create your models here.
 
 
 class Course(models.Model):
+    course_org = models.ForeignKey(
+        CourseOrg, verbose_name="课程机构", null=True, blank=True)
     name = models.CharField(max_length=50, verbose_name="课程名")
     desc = models.CharField(max_length=300, verbose_name="课程描述")
     detail = models.TextField(verbose_name="课程详情")
@@ -14,7 +17,7 @@ class Course(models.Model):
         max_length=2, verbose_name="难度")
     learn_times = models.IntegerField(
         default=0,
-        verbose_name="学习时长(分钟)")
+        verbose_name="学习时长(小时)")
     student_nums = models.IntegerField(
         default=0,
         verbose_name="学习人数")
@@ -22,7 +25,7 @@ class Course(models.Model):
         default=0,
         verbose_name="收藏人数")
     images = models.ImageField(
-        upload_to="image/courses/%Y/%m",
+        upload_to="courses/%Y/%m",
         verbose_name="封面图",
         max_length=100)
     click_nums = models.IntegerField(
@@ -78,7 +81,7 @@ class CourseResource(models.Model):
         verbose_name="名称"
     )
     download = models.FileField(
-        upload_to='course/resource/%Y/%m',
+        upload_to='resource/%Y/%m',
         verbose_name="资源文件",
         max_length=100
     )
