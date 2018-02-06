@@ -19,4 +19,5 @@ urlpatterns = [
     url(r'^desc/(?P<org_id>\d+)/$', OrgDescView.as_view(), name="org_desc"),
     url(r'^teacher/(?P<org_id>\d+)/$',
         OrgTeacherView.as_view(), name="org_teacher"),
+    url(r'^add_fav/$', AddFavView.as_view(), name="add_fav"),
 ]

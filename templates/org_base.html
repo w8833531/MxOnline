@@ -165,7 +165,7 @@
             $.ajax({
                 cache: false,
                 type: "POST",
-                url: "",
+                url: "{% url 'org:add_fav' %}",
                 data: { 'fav_id': fav_id, 'fav_type': fav_type },
                 async: true,
                 beforeSend: function (xhr, settings) {
@@ -195,7 +195,7 @@
                 score = $precision.attr('data-star-scope'),
                 option = {
                     half: true,
-                    path: '{% static 'images/' %}',
+                    path: '{% static "images/" %}',
                     precision: true,
                     size: 24,
                     starOff: 'g_star.png',
