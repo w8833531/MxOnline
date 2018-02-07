@@ -54,6 +54,8 @@ urlpatterns = [
         ResetView.as_view(), name="reset_pwd"),
     # 更改密码
     url(r'^modify_pwd/$', ModifyPwdView.as_view(), name="modify_pwd"),
-    # 课程机构URL
+    # 机构URL
     url(r'^org/', include('organization.urls', namespace="org")),
+    # 课程URL
+    url(r'^course/', include('courses.urls', namespace="course")),
 ]
