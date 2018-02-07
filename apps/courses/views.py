@@ -78,7 +78,7 @@ class CourseDetailView(View):
 
         tag = course.tag
         if tag:
-            relate_coures = Course.objects.filter(tag=tag)[:1]
+            relate_coures = Course.objects.filter(tag=tag)[:2]
         else:
             relate_coures = []
         return render(request, "course-detail.html", {
