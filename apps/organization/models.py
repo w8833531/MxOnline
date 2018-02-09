@@ -125,6 +125,10 @@ class Teacher(models.Model):
         max_length=100,
         default='',
     )
+    age = models.IntegerField(
+        default=0,
+        verbose_name="年龄"
+    )
     click_nums = models.IntegerField(
         default=0,
         verbose_name="点击数"

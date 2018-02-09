@@ -96,16 +96,16 @@
 						<div class="wp">
 							<ul>
 								<li class="active">
-									<a href="">首页</a>
+									<a href=" {% url 'index' %} ">首页</a>
 								</li>
 								<li class="active">
-									<a href="">
+									<a href="{% url 'course:course_list' %}">
 										公开课
 										<img class="hot" src="{% static 'images/nav_hot.png' %}">
 									</a>
 								</li>
 								<li class="active">
-									<a href="">授课教师</a>
+									<a href="{% url 'org:teacher_list' %}">授课教师</a>
 								</li>
 								<li class="active">
 									<a href="{% url 'org:org_list' %}">授课机构</a>
