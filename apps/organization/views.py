@@ -284,6 +284,7 @@ class TeacherListView(View):
         return render(request, "teachers-list.html", {
             "all_teachers": teachers,
             "sorted_teachers": sorted_teachers,
+            "sort": sort,
         })
 
 
