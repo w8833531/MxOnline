@@ -21,11 +21,16 @@ class CourseListView(View):
 
         hot_courses = Course.objects.all().order_by("-click_nums")[:3]
 
-        # 课程搜索
+        # 课程搜索search_keywords
         search_keywords = request.GET.get('keywords', "")
         if search_keywords:
-            all_courses = all_courses.filter(Q(name__icontains=search_keywords) | Q(
-                desc__icontains=search_keywords) | Q(detail__icontains=search_keywords))
+            # name__icontains=search_kewords （django ORM,相当于SQL的like语句)
+            # Q() | Q () 相当于逻辑或
+            all_courses = all_courses.filter(
+                Q(name__icontains=search_keywords) |
+                Q(desc__icontains=search_keywords) |
+                Q(detail__icontains=search_keywords)
+            )
 
         # 课程排序
         sort = request.GET.get('sort', "")

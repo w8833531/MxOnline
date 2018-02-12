@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.views.generic import View
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse
+from django.db.models import Q
 from .models import CourseOrg, CityDict, Teacher
 from operation.forms import *
 from operation.models import *
@@ -27,6 +28,16 @@ class OrgView(View):
         city_id = request.GET.get('city', "")
         if city_id:
             all_orgs = all_orgs.filter(city_id=int(city_id))
+
+        # 机构搜索search_keywords
+        search_keywords = request.GET.get('keywords', "")
+        if search_keywords:
+            # name__icontains=search_kewords （django ORM,相当于SQL的like语句)
+            # Q() | Q () 相当于逻辑或
+            all_orgs = all_orgs.filter(
+                Q(name__icontains=search_keywords) |
+                Q(desc__icontains=search_keywords)
+            )
         # 筛选类别
         category = request.GET.get('ct', "")
         if category:
@@ -267,6 +278,16 @@ class TeacherListView(View):
         all_teachers = Teacher.objects.all()
         # 讲师排行
         sorted_teachers = all_teachers.order_by("-click_nums")[:3]
+        # 讲师搜索search_keywords
+        search_keywords = request.GET.get('keywords', "")
+        if search_keywords:
+            # name__icontains=search_kewords （django ORM,相当于SQL的like语句)
+            # Q() | Q () 相当于逻辑或
+            all_teachers = all_teachers.filter(
+                Q(name__icontains=search_keywords) |
+                Q(work_company__icontains=search_keywords) |
+                Q(work_position__icontains=search_keywords)
+            )
         # 讲师人气排行
         sort = request.GET.get('sort', "")
         if sort:
