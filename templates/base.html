@@ -35,13 +35,13 @@
 									<img class="down fr" src="{% static " /static/images/top_down.png " %}"/>
 								</dd>
 								<dt>
-									<img width="20" height="20" src="{{ MEDIA_URL }}{{ request.user.image }}" />
+									<img width="20" height="20" src="{{ MEDIA_URL }}{{ request.user.images }}" />
 								</dt>
 							</dl>
 							<div class="userdetail">
 								<dl>
 									<dt>
-										<img width="80" height="80" src="{{ MEDIA_URL }}{{ request.user.image }}" />
+										<img width="80" height="80" src="{{ MEDIA_URL }}{{ request.user.images }}" />
 									</dt>
 									<dd>
 										<h2>{{ request.user.nick_name }}</h2>
@@ -49,14 +49,14 @@
 									</dd>
 								</dl>
 								<div class="btn">
-									<a class="personcenter fl" href="">进入个人中心</a>
-									<a class="fr" href="">退出</a>
+									<a class="personcenter fl" href="{% url 'users:user_info' %}">进入个人中心</a>
+									<a class="fr" href="{% url 'logout' %}">退出</a>
 								</div>
 							</div>
 						</div>
-						<a href="">
+						<a href="{% url 'users:mymessage' %}">
 							<div class="msg-num">
-								<span id="MsgNum"></span>
+								<span id="MsgNum">{{ request.user.unread_nums }}</span>
 							</div>
 						</a>
 						{% else %}

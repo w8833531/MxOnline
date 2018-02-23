@@ -52,10 +52,14 @@ urlpatterns = [
     # 重置密码 url
     url(r'^reset/(?P<reset_code>.*)/$',
         ResetView.as_view(), name="reset_pwd"),
+    # 用户登出
+    url('^logout/$', LogoutView.as_view(), name="logout"),
     # 更改密码
     url(r'^modify_pwd/$', ModifyPwdView.as_view(), name="modify_pwd"),
     # 机构URL
     url(r'^org/', include('organization.urls', namespace="org")),
     # 课程URL
     url(r'^course/', include('courses.urls', namespace="course")),
+    # 用户URL
+    url(r'^users/', include('users.urls', namespace="users")),
 ]
