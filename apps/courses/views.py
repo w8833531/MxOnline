@@ -38,7 +38,7 @@ class CourseListView(View):
             if sort == "students":
                 all_courses = all_courses.order_by("-student_nums")
             elif sort == "hot":
-                all_courses = all_courses.order_by("-fav_nums")
+                all_courses = all_courses.order_by("-click_nums")
 
         # 对课程进行分页
         try:

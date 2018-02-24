@@ -315,20 +315,24 @@ class TeacherDetailView(View):
     """
 
     def get(self, request, teacher_id):
+        # 增加讲师点击数
         teacher = Teacher.objects.get(id=int(teacher_id))
         teacher.click_nums += 1
         teacher.save()
+
         # 讲师收藏
         has_teacher_faved = False
-        if UserFavorite.objects.filter(user=request.user,
-                                       fav_type=3, fav_id=teacher.id):
-            has_teacher_faved = True
+        if request.user.is_authenticated():
+            if UserFavorite.objects.filter(user=request.user,
+                                           fav_type=3, fav_id=teacher.id):
+                has_teacher_faved = True
 
         # 机构收藏
         has_org_faved = False
-        if UserFavorite.objects.filter(user=request.user,
-                                       fav_type=2, fav_id=teacher.org.id):
-            has_org_faved = True
+        if request.user.is_authenticated():
+            if UserFavorite.objects.filter(user=request.user,
+                                           fav_type=2, fav_id=teacher.org.id):
+                has_org_faved = True
 
         # 讲师排行
         all_teachers = Teacher.objects.all()
