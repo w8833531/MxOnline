@@ -18,12 +18,14 @@ Including another URLconf
 from django.conf.urls import url, include
 # from django.contrib import admin
 from django.views.generic import TemplateView
+from django.views.static import serve
 
 import xadmin
 
 
 from users.views import *
 from organization.views import *
+from MxOnline.settings import STATIC_ROOT
 
 
 # from xadmin.plugins import xversion
@@ -37,7 +39,7 @@ urlpatterns = [
     # 管理站点xadmin url
     url(r'^xadmin/', xadmin.site.urls),
     # 首页 url
-    url('^$', TemplateView.as_view(template_name="index.html"), name="index"),
+    url('^$', IndexView.as_view(), name="index"),
     # 登录 url
     url('^login/$', LoginView.as_view(), name="login"),
     # 注册 url
@@ -62,4 +64,11 @@ urlpatterns = [
     url(r'^course/', include('courses.urls', namespace="course")),
     # 用户URL
     url(r'^users/', include('users.urls', namespace="users")),
+    # 配置静态文件路径
+    url(r'^static/(?P<path>.*)$', serve, {"document_root": STATIC_ROOT}),
 ]
+
+# 全局404页面配置
+hander404 = 'users.views.page_not_found'
+# 全局500页面配置
+hander500 = 'users.views.page_error'

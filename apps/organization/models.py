@@ -40,6 +40,11 @@ class CourseOrg(models.Model):
         default='',
         verbose_name="机构描述",
     )
+    tag = models.CharField(
+        default='全国知名',
+        max_length=10,
+        verbose_name="机构标签"
+    )
     category = models.CharField(
         max_length=20,
         choices=(("pxjg", "培训机构"), ("gx", "高校"), ("gr", "个人")),

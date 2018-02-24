@@ -6,10 +6,11 @@ from django.db.models import Q
 from django.views.generic.base import View
 from django.contrib.auth.hashers import make_password
 from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render_to_response
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
-from .models import UserProfile, EmailVerifyRecode
-from .froms import *
+from .models import *
+from .forms import *
 from operation.models import UserCourse, UserFavorite, UserMessage
 from organization.models import CourseOrg, Teacher
 from courses.models import Course
@@ -115,6 +116,25 @@ class RegisterView(View):
                           {"register_form": register_form})
 
 
+# 增加一个不安全的，可能进行SQL注入的loginView,没有使用django的ORM
+class LoginUnsafeView(View):
+    def get(self, request):
+        return render(request, "login.html", {})
+
+    def post(self, request):
+        user_name = request.POST.get("username", "")
+        pass_word = request.POST.get("password", "")
+        import MySQLdb
+        conn = MySQLdb.connect(host="127.0.0.1", user='root',
+                               password='asdf:LKJ', db='mxonline', charset='utf8')
+        cursor = conn.cursor()
+        sql_select = "select * from users_userporfile where email='{0}' and password='{1}'".format(
+            user_name, pass_word)
+        result = cursor.execute(sql_select)
+        for row in cursor.fetchall():
+            pass
+
+
 class LoginView(View):
     def get(self, request):
         return render(request, "login.html", {})
@@ -128,7 +148,7 @@ class LoginView(View):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    return render(request, "index.html")
+                    return HttpResponseRedirect(reverse("index"))
                 else:
                     return render(request, "login.html",
                                   {"msg": "用户没有激活，请激活后再登录"})
@@ -336,7 +356,7 @@ class MyMessageView(LoginRequiredMixin, View):
             user=request.user.id, has_read=False)
         for unread_message in all_unread_messages:
             unread_message.has_read = True
-            unread_message.save
+            unread_message.save()
         # 对个人消息进行分页
         try:
             page = request.GET.get('page', 1)
@@ -350,3 +370,36 @@ class MyMessageView(LoginRequiredMixin, View):
         return render(request, 'usercenter-message.html', {
             "messages": messages,
         })
+
+
+class IndexView(View):
+    """
+    首页
+    """
+
+    def get(self, request):
+        # 取出轮播图
+        all_banners = Banner.objects.all().order_by('index')
+        courses = Course.objects.filter(is_banner=False)[:6]
+        banner_courses = Course.objects.filter(is_banner=True)[:3]
+        course_orgs = CourseOrg.objects.all()[:15]
+        return render(request, 'index.html', {
+            'all_banners': all_banners,
+            'courses': courses,
+            'banner_courses': banner_courses,
+            'course_orgs': course_orgs,
+        })
+
+
+# 全局404配置函数
+def page_not_found(request):
+    response = render_to_response('404.html', {})
+    response.status_code = 404
+    return response
+
+
+# 全局500配置函数
+def page_error(request):
+    response = render_to_response('500.html', {})
+    response.status_code = 500
+    return response
