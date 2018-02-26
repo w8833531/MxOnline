@@ -53,6 +53,7 @@ class Course(models.Model):
     def get_zj_nums(self):
         # 返回课程章节数
         return self.lesson_set.all().count()
+    get_zj_nums.short_description = "章节数"
 
     def get_learn_users(self):
         # 返回学习用户数
