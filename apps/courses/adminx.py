@@ -33,6 +33,7 @@ class CourseAdmin(object):
     ordering = ['-click_nums']
     readonly_fields = ['click_nums']
     exclude = ['fav_nums']
+    relfield_style = 'fk-ajax'
 
 
 class LessonAdmin(object):
