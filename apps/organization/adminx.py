@@ -13,6 +13,7 @@ class CityDictAdmin(object):
     list_display = ('name', 'desc', 'add_time')
     search_fields = ('name', 'desc')
     list_filter = ('name', 'desc', 'add_time')
+    model_icon = 'fa fa-university'
 
 
 class CourseOrgAdmin(object):

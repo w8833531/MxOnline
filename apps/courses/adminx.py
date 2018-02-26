@@ -24,11 +24,15 @@ class GlobalSettings(object):
 
 class CourseAdmin(object):
     list_display = ('name', 'desc', 'detail',
-                    'degree', 'learn_times', 'student_nums', 'fav_nums')
+                    'degree', 'click_nums', 'learn_times', 'student_nums', 'fav_nums')
     search_fields = ('name', 'desc', 'detail',
                      'degree', 'learn_times', 'student_nums', 'fav_nums')
     list_filter = ('name', 'desc', 'detail',
                    'degree', 'learn_times', 'student_nums', 'fav_nums')
+    model_icon = 'fa fa fa-envelope-open'
+    ordering = ['-click_nums']
+    readonly_fields = ['click_nums']
+    exclude = ['fav_nums']
 
 
 class LessonAdmin(object):

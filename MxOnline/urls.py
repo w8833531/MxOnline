@@ -25,7 +25,7 @@ import xadmin
 
 from users.views import *
 from organization.views import *
-from MxOnline.settings import STATIC_ROOT
+# from MxOnline.settings import STATIC_ROOT
 
 
 # from xadmin.plugins import xversion
@@ -65,7 +65,7 @@ urlpatterns = [
     # 用户URL
     url(r'^users/', include('users.urls', namespace="users")),
     # 配置静态文件路径
-    url(r'^static/(?P<path>.*)$', serve, {"document_root": STATIC_ROOT}),
+    # url(r'^static/(?P<path>.*)$', serve, {"document_root": STATIC_ROOT}),
 ]
 
 # 全局404页面配置
