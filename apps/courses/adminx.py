@@ -8,7 +8,7 @@
 
 import xadmin
 
-from .models import Course, Lesson, Video, CourseResource
+from .models import Course, BannerCourse, Lesson, Video, CourseResource
 
 
 class BaseSetting(object):
@@ -20,6 +20,16 @@ class GlobalSettings(object):
     site_title = "慕学后台管理"
     site_footer = "慕学在线"
     menu_style = "accordion"
+
+
+class LessonInline(object):
+    model = Lesson
+    extra = 0
+
+
+class CourseResourceInline(object):
+    model = CourseResource
+    extra = 0
 
 
 class CourseAdmin(object):
@@ -34,12 +44,47 @@ class CourseAdmin(object):
     readonly_fields = ['click_nums']
     exclude = ['fav_nums']
     relfield_style = 'fk-ajax'
+    inlines = [LessonInline, CourseResourceInline]
+
+    # 重载父类的queryset方法，过虑出is_banner=True的数据
+    def queryset(self):
+        qs = super(CourseAdmin, self).queryset()
+        qs = qs.filter(is_banner=False)
+        return qs
+
+
+# 只显示广告课程is_banner=True
+class BannerCourseAdmin(object):
+    list_display = ('name', 'desc', 'detail',
+                    'degree', 'click_nums', 'learn_times', 'student_nums', 'fav_nums')
+    search_fields = ('name', 'desc', 'detail',
+                     'degree', 'learn_times', 'student_nums', 'fav_nums')
+    list_filter = ('name', 'desc', 'detail',
+                   'degree', 'learn_times', 'student_nums', 'fav_nums')
+    model_icon = 'fa fa fa-envelope-open'
+    ordering = ['-click_nums']
+    readonly_fields = ['click_nums']
+    exclude = ['fav_nums']
+    relfield_style = 'fk-ajax'
+    inlines = [LessonInline, CourseResourceInline]
+
+    # 重载父类的queryset方法，过虑出is_banner=True的数据
+    def queryset(self):
+        qs = super(BannerCourseAdmin, self).queryset()
+        qs = qs.filter(is_banner=True)
+        return qs
+
+
+class VideoInline(object):
+    model = Video
+    extra = 0
 
 
 class LessonAdmin(object):
     list_display = ('course', 'name', 'add_time')
     search_fields = ('course', 'name')
     list_filter = ('course__name', 'name', 'add_time')
+    inlines = [VideoInline]
 
 
 class VideoAdmin(object):
@@ -55,6 +100,7 @@ class CourseResourceAdmin(object):
 
 
 xadmin.site.register(Course, CourseAdmin)
+xadmin.site.register(BannerCourse, BannerCourseAdmin)
 xadmin.site.register(Lesson, LessonAdmin)
 xadmin.site.register(Video, VideoAdmin)
 xadmin.site.register(CourseResource, CourseResourceAdmin)

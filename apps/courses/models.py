@@ -66,6 +66,15 @@ class Course(models.Model):
         return self.name
 
 
+# BannerCourse 类用于xamdin 中显示一个广告课程的菜单
+class BannerCourse(Course):
+    class Meta:
+        verbose_name = "广告课程"
+        verbose_name_plural = verbose_name
+        # 继承Course类，设置proxy = True 时，不再生成新表
+        proxy = True
+
+
 class Lesson(models.Model):
     course = models.ForeignKey(Course, verbose_name="课程")
     name = models.CharField(
@@ -127,3 +136,6 @@ class CourseResource(models.Model):
     class Meta:
         verbose_name = "课程资源"
         verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.name
