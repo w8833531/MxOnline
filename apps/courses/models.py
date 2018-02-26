@@ -1,7 +1,7 @@
 from django.db import models
 from datetime import datetime
 from organization.models import CourseOrg, Teacher
-
+from DjangoUeditor.models import UEditorField
 
 # Create your models here.
 
@@ -13,7 +13,8 @@ class Course(models.Model):
         Teacher, verbose_name="讲师", null=True, blank=True)
     name = models.CharField(max_length=50, verbose_name="课程名")
     desc = models.CharField(max_length=300, verbose_name="课程描述")
-    detail = models.TextField(verbose_name="课程详情")
+    detail = UEditorField(verbose_name="课程详情", width=600, height=300,
+                          imagePath="courses/ueditor/", filePath="courses/ueditor/", default="")
     is_banner = models.BooleanField(default=False, verbose_name="是否为广告位")
     degree = models.CharField(
         choices=(("cj", "初级"), ("zj", "中级"), ("gj", "高级")),

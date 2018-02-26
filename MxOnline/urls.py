@@ -64,6 +64,8 @@ urlpatterns = [
     url(r'^course/', include('courses.urls', namespace="course")),
     # 用户URL
     url(r'^users/', include('users.urls', namespace="users")),
+    # 增加富文本 DjangoUedit url
+    url(r'^ueditor/', include('DjangoUeditor.urls')),
     # 配置静态文件路径
     # url(r'^static/(?P<path>.*)$', serve, {"document_root": STATIC_ROOT}),
 ]

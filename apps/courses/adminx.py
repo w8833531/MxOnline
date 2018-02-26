@@ -48,6 +48,7 @@ class CourseAdmin(object):
     relfield_style = 'fk-ajax'
     inlines = [LessonInline, CourseResourceInline]
     refresh_times = [15, 30, 45, 60]
+    style_fields = {"detail": "ueditor"}
 
     # 重载父类的queryset方法，过虑出is_banner=True的数据
     def queryset(self):

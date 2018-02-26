@@ -1,34 +1,35 @@
 
 PLUGINS = (
-    'actions', 
-    'filters', 
-    'bookmark', 
-    'export', 
-    'layout', 
+    'actions',
+    'filters',
+    'bookmark',
+    'export',
+    'layout',
     'refresh',
     'details',
-    'editable', 
-    'relate', 
-    'chart', 
-    'ajax', 
-    'relfield', 
-    'inline', 
-    'topnav', 
-    'portal', 
+    'editable',
+    'relate',
+    'chart',
+    'ajax',
+    'relfield',
+    'inline',
+    'topnav',
+    'portal',
     'quickform',
-    'wizard', 
-    'images', 
-    'auth', 
-    'multiselect', 
-    'themes', 
-    'aggregation', 
-    'mobile', 
+    'wizard',
+    'images',
+    'auth',
+    'multiselect',
+    'themes',
+    'aggregation',
+    'mobile',
     'passwords',
-    'sitemenu', 
-    'language', 
+    'sitemenu',
+    'language',
     'quickfilter',
     'sortablelist',
-	'importexport'
+    'importexport',
+    'ueditor',
 )
 
 
@@ -38,4 +39,5 @@ def register_builtin_plugins(site):
 
     exclude_plugins = getattr(settings, 'XADMIN_EXCLUDE_PLUGINS', [])
 
-    [import_module('xadmin.plugins.%s' % plugin) for plugin in PLUGINS if plugin not in exclude_plugins]
+    [import_module('xadmin.plugins.%s' % plugin)
+     for plugin in PLUGINS if plugin not in exclude_plugins]
