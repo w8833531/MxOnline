@@ -49,6 +49,7 @@ class CourseAdmin(object):
     inlines = [LessonInline, CourseResourceInline]
     refresh_times = [15, 30, 45, 60]
     style_fields = {"detail": "ueditor"}
+    import_excel = True
 
     # 重载父类的queryset方法，过虑出is_banner=True的数据
     def queryset(self):
@@ -66,8 +67,15 @@ class CourseAdmin(object):
                 course_org=course_org).count()
             course_org.save
 
+    # 重载父类的 post 方法， 实现excel的导入功能
+    def post(self, request, *args, **kwargs):
+        if 'excel' in request.FILES:
+            pass
+        return super(CourseAdmin, self).post(request, args, kwargs)
 
 # 只显示广告课程is_banner=True
+
+
 class BannerCourseAdmin(object):
     list_display = ['name', 'desc', 'detail',
                     'degree', 'click_nums', 'learn_times', 'student_nums', 'fav_nums', 'get_zj_nums']
