@@ -70,7 +70,9 @@ class CourseOrg(models.Model):
     images = models.ImageField(
         upload_to="org/%Y/%m",
         verbose_name="logo",
-        max_length=100)
+        max_length=100,
+        null=True,
+        blank=True)
     address = models.CharField(
         max_length=150,
         verbose_name="机构地址",
@@ -128,7 +130,8 @@ class Teacher(models.Model):
         upload_to="teacher/%Y/%m",
         verbose_name="头像",
         max_length=100,
-        default='',
+        null=True,
+        blank=True,
     )
     age = models.IntegerField(
         default=0,

@@ -31,7 +31,9 @@ class Course(models.Model):
     images = models.ImageField(
         upload_to="courses/%Y/%m",
         verbose_name="封面图",
-        max_length=100)
+        max_length=100,
+        null=True,
+        blank=True)
     click_nums = models.IntegerField(
         default=0,
         verbose_name="点击数")
